@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://localhost:8080/preview.html -->
+<html lang="en" class="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FairFund — Transparent Blockchain Donation Platform</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="./FairFund — Transparent Blockchain Donation Platform_files/saved_resource"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="./FairFund — Transparent Blockchain Donation Platform_files/all.min.css">
+  <!-- Google Fonts: Inter -->
+  <link href="./FairFund — Transparent Blockchain Donation Platform_files/css2" rel="stylesheet">
+  <!-- Ethers.js v6 -->
+  <script src="./FairFund — Transparent Blockchain Donation Platform_files/ethers.umd.min.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="./FairFund — Transparent Blockchain Donation Platform_files/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { background-color: #080c14; color: #f3f4f6; }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card {
+      background: rgba(20, 29, 50, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #4ade80 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-gold {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glow-emerald {
+      box-shadow: 0 0 25px -5px rgba(34, 197, 94, 0.35);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.inset-y-0{top:0px;bottom:0px}.-bottom-24{bottom:-6rem}.-left-24{left:-6rem}.-right-24{right:-6rem}.-top-24{top:-6rem}.bottom-5{bottom:1.25rem}.right-0{right:0px}.right-1\.5{right:0.375rem}.right-5{right:1.25rem}.top-0{top:0px}.top-1\.5{top:0.375rem}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.ml-2{margin-left:0.5rem}.ml-auto{margin-left:auto}.mr-1{margin-right:0.25rem}.mt-1{margin-top:0.25rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-11{height:2.75rem}.h-16{height:4rem}.h-2\.5{height:0.625rem}.h-20{height:5rem}.h-3\.5{height:0.875rem}.h-96{height:24rem}.h-full{height:100%}.max-h-36{max-height:9rem}.max-h-\[90vh\]{max-height:90vh}.min-h-screen{min-height:100vh}.w-11{width:2.75rem}.w-16{width:4rem}.w-2\.5{width:0.625rem}.w-96{width:24rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-7xl{max-width:80rem}.max-w-\[200px\]{max-width:200px}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.border-collapse{border-collapse:collapse}.translate-y-20{--tw-translate-y:5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-3\.5{gap:0.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-8{gap:2rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-10 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-800\/60 > :not([hidden]) ~ :not([hidden]){border-color:rgb(30 41 59 / 0.6)}.self-start{align-self:flex-start}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.break-all{word-break:break-all}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-amber-500\/40{border-color:rgb(245 158 11 / 0.4)}.border-emerald-500\/20{border-color:rgb(16 185 129 / 0.2)}.border-emerald-500\/30{border-color:rgb(16 185 129 / 0.3)}.border-emerald-500\/40{border-color:rgb(16 185 129 / 0.4)}.border-sky-500\/20{border-color:rgb(14 165 233 / 0.2)}.border-sky-500\/30{border-color:rgb(14 165 233 / 0.3)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/60{border-color:rgb(30 41 59 / 0.6)}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-500\/15{background-color:rgb(245 158 11 / 0.15)}.bg-amber-500\/20{background-color:rgb(245 158 11 / 0.2)}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}.bg-emerald-500\/15{background-color:rgb(16 185 129 / 0.15)}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-rose-500\/20{background-color:rgb(244 63 94 / 0.2)}.bg-sky-500{--tw-bg-opacity:1;background-color:rgb(14 165 233 / var(--tw-bg-opacity, 1))}.bg-sky-500\/10{background-color:rgb(14 165 233 / 0.1)}.bg-sky-600{--tw-bg-opacity:1;background-color:rgb(2 132 199 / var(--tw-bg-opacity, 1))}.bg-slate-500\/20{background-color:rgb(100 116 139 / 0.2)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/70{background-color:rgb(15 23 42 / 0.7)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-slate-950\/85{background-color:rgb(2 6 23 / 0.85)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right, var(--tw-gradient-stops))}.from-amber-500{--tw-gradient-from:#f59e0b var(--tw-gradient-from-position);--tw-gradient-to:rgb(245 158 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-500{--tw-gradient-from:#10b981 var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-emerald-400{--tw-gradient-to:rgb(52 211 153 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #34d399 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-teal-400{--tw-gradient-to:rgb(45 212 191 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #2dd4bf var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-sky-400{--tw-gradient-to:#38bdf8 var(--tw-gradient-to-position)}.to-sky-500{--tw-gradient-to:#0ea5e9 var(--tw-gradient-to-position)}.to-teal-400{--tw-gradient-to:#2dd4bf var(--tw-gradient-to-position)}.p-0\.5{padding:0.125rem}.p-1{padding:0.25rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pb-5{padding-bottom:1.25rem}.pl-3{padding-left:0.75rem}.pl-4{padding-left:1rem}.pr-1{padding-right:0.25rem}.pr-16{padding-right:4rem}.pr-20{padding-right:5rem}.pr-4{padding-right:1rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-sans{font-family:Inter, sans-serif}.font-mono{font-family:JetBrains Mono, monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175 / var(--tw-text-opacity, 1))}.text-sky-400{--tw-text-opacity:1;color:rgb(56 189 248 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-amber-500\/20{--tw-shadow-color:rgb(245 158 11 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-emerald-500\/20{--tw-shadow-color:rgb(16 185 129 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-emerald-500\/25{--tw-shadow-color:rgb(16 185 129 / 0.25);--tw-shadow:var(--tw-shadow-colored)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.ease-out{transition-timing-function:cubic-bezier(0, 0, 0.2, 1)}.selection\:bg-emerald-500 *::selection{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.selection\:text-slate-950 *::selection{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.selection\:bg-emerald-500::selection{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.selection\:text-slate-950::selection{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.hover\:bg-amber-400:hover{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-400:hover{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.hover\:bg-sky-400:hover{--tw-bg-opacity:1;background-color:rgb(56 189 248 / var(--tw-bg-opacity, 1))}.hover\:bg-sky-500:hover{--tw-bg-opacity:1;background-color:rgb(14 165 233 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-900\/60:hover{background-color:rgb(15 23 42 / 0.6)}.hover\:from-amber-400:hover{--tw-gradient-from:#fbbf24 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 191 36 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:from-emerald-400:hover{--tw-gradient-from:#34d399 var(--tw-gradient-from-position);--tw-gradient-to:rgb(52 211 153 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-amber-500:hover{--tw-gradient-to:#f59e0b var(--tw-gradient-to-position)}.hover\:to-emerald-300:hover{--tw-gradient-to:#6ee7b7 var(--tw-gradient-to-position)}.hover\:to-teal-300:hover{--tw-gradient-to:#5eead4 var(--tw-gradient-to-position)}.hover\:text-emerald-400:hover{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.hover\:text-sky-300:hover{--tw-text-opacity:1;color:rgb(125 211 252 / var(--tw-text-opacity, 1))}.hover\:text-slate-300:hover{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.focus\:border-emerald-500:focus{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.focus\:border-sky-500:focus{--tw-border-opacity:1;border-color:rgb(14 165 233 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-emerald-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(16 185 129 / var(--tw-ring-opacity, 1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:block{display:block}.sm\:flex{display:flex}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:self-auto{align-self:auto}.sm\:p-10{padding:2.5rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-span-8{grid-column:span 8 / span 8}.lg\:inline{display:inline}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="min-h-screen flex flex-col font-sans antialiased text-slate-100 selection:bg-emerald-500 selection:text-slate-950">
+
+  <!-- Network Alert Banner -->
+  <div id="networkAlertBanner" class="bg-amber-500/15 border-b border-amber-500/30 text-amber-300 px-4 py-2.5 text-xs sm:text-sm text-center flex items-center justify-center gap-3 hidden transition-all">
+    <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base"></i>
+    <span>You are connected to an unsupported network. FairFund runs on <strong>Ethereum Sepolia Testnet</strong> (Chain ID: 11155111).</span>
+    <button onclick="switchNetwork()" class="ml-2 px-3 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold rounded-lg shadow-sm transition active:scale-95">
+      <i class="fa-solid fa-rotate mr-1"></i> Switch to Sepolia
+    </button>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/85 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 to-sky-500 flex items-center justify-center shadow-lg shadow-emerald-500/25">
+          <i class="fa-solid fa-hand-holding-dollar text-slate-950 text-2xl font-bold"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl sm:text-2xl font-black tracking-tight text-white">FairFund</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 tracking-wide uppercase">
+              Sepolia DApp
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Non-Custodial Philanthropy • Zero Platform Fee</p>
+        </div>
+      </div>
+
+      <!-- Quick Links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-5 text-xs font-semibold text-slate-300">
+        <a href="http://localhost:8080/preview.html#campaignSection" class="hover:text-emerald-400 transition">Campaign</a>
+        <a href="http://localhost:8080/preview.html#ledgerSection" class="hover:text-emerald-400 transition">Live Ledger</a>
+        <a href="http://localhost:8080/preview.html#architectureSection" class="hover:text-emerald-400 transition">PRD &amp; Architecture</a>
+        <a href="http://localhost:8080/preview.html#roadmapSection" class="hover:text-emerald-400 transition">Roadmap</a>
+        <a href="https://github.com/Pleum/FairFund" target="_blank" class="hover:text-emerald-400 text-slate-200 transition flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-800">
+          <i class="fa-brands fa-github text-sm"></i> GitHub Repository
+        </a>
+      </nav>
+
+      <!-- Action Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Sepolia Status Indicator -->
+        <div id="networkBadge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="networkNameText" class="font-medium">Sepolia (11155111)</span>
+        </div>
+
+        <!-- Manual Address Mode Toggle -->
+        <button onclick="toggleManualInspectionModal()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold transition flex items-center gap-1.5" title="Inspect address without signing">
+          <i class="fa-solid fa-magnifying-glass text-sky-400"></i>
+          <span class="hidden lg:inline">Inspect Address</span>
+        </button>
+
+        <!-- Connect Wallet Button -->
+        <button id="connectWalletBtn" onclick="smartConnectWallet()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all transform active:scale-95">
+          <i class="fa-solid fa-wallet"></i>
+          <span id="connectWalletBtnText">0x6a53...3920</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+    <!-- Hero / Vision Section -->
+    <section class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden">
+      <!-- Background Ambient Glow -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+            <i class="fa-solid fa-shield-halved"></i> Verified Smart Contract On Sepolia
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+            Transparent Philanthropy <br>
+            <span class="gradient-text">Governed by Code, Not Intermediaries.</span>
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+            FairFund replaces opaque crowdfunding banking silos with direct, non-custodial smart contracts. 
+            Enjoy <strong>0% platform fees</strong>, instant 12-second settlement, and cryptographic donation receipts logged immutably to the Ethereum blockchain.
+          </p>
+
+          <!-- Traditional vs FairFund Quick Highlights -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            <div class="glass-card rounded-xl p-3 border border-slate-800/80">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Platform Fee</span>
+              <span class="text-base font-extrabold text-emerald-400">0% Always</span>
+            </div>
+            <div class="glass-card rounded-xl p-3 border border-slate-800/80">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Settlement Time</span>
+              <span class="text-base font-extrabold text-white">~12 Seconds</span>
+            </div>
+            <div class="glass-card rounded-xl p-3 border border-slate-800/80">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Audit Trail</span>
+              <span class="text-base font-extrabold text-sky-400">100% On-Chain</span>
+            </div>
+            <div class="glass-card rounded-xl p-3 border border-slate-800/80">
+              <span class="text-[10px] text-slate-400 uppercase font-semibold block">Custody</span>
+              <span class="text-base font-extrabold text-emerald-300">Non-Custodial</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Target Contract Mini-Card -->
+        <div class="lg:col-span-4 glass-card rounded-2xl p-5 border border-emerald-500/20 space-y-4 shadow-xl">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-white flex items-center gap-1.5">
+              <i class="fa-solid fa-cube text-emerald-400"></i> Active Smart Contract
+            </span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">
+              Sepolia Live
+            </span>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-[11px] font-semibold text-slate-400">Target Contract Address</label>
+            <div class="relative">
+              <input type="text" id="contractAddressInput" value="0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3" class="w-full pl-3 pr-20 py-2 rounded-xl bg-slate-900 border border-slate-700 font-mono text-xs text-emerald-300 focus:outline-none focus:border-emerald-500">
+              <button onclick="copyToClipboard(document.getElementById('contractAddressInput').value, 'Contract Address')" class="absolute right-1.5 top-1.5 px-2 py-0.5 text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 transition">
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-1">
+            <button onclick="updateContractAddress()" class="text-xs text-slate-300 hover:text-white font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-rotate text-emerald-400"></i> Update
+            </button>
+            <button onclick="openContractInspector()" class="text-xs text-emerald-400 hover:underline font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-code"></i> Source &amp; ABI
+            </button>
+            <a id="etherscanContractLink" href="https://sepolia.etherscan.io/address/0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3" target="_blank" class="text-sky-400 hover:underline font-semibold flex items-center gap-1">
+              Etherscan <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Campaign Metrics & Goal Progress Bar -->
+    <section id="campaignSection" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2.5">
+            <i class="fa-solid fa-chart-line text-emerald-400"></i> Live Campaign Vault Metrics
+          </h2>
+          <p class="text-xs text-slate-400">Synchronized directly with the Sepolia blockchain via public RPC multi-failover</p>
+        </div>
+        <button onclick="refreshAllData()" class="self-start sm:self-auto px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 transition flex items-center gap-2">
+          <i class="fa-solid fa-arrows-rotate text-emerald-400"></i> Refresh On-Chain State
+        </button>
+      </div>
+
+      <!-- 4 Stats Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Stat 1: Total Balance -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-800/80 space-y-2">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span class="font-bold uppercase tracking-wider">Vault Balance</span>
+            <i class="fa-brands fa-ethereum text-emerald-400 text-base"></i>
+          </div>
+          <div class="flex items-baseline gap-1.5">
+            <span id="contractBalanceETH" class="text-3xl font-black text-white">0.0010</span>
+            <span class="text-sm font-bold text-emerald-400">ETH</span>
+          </div>
+          <p class="text-[11px] text-slate-400" id="contractBalanceUSD">≈ $2.65 USD</p>
+        </div>
+
+        <!-- Stat 2: Total Contributed -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-800/80 space-y-2">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span class="font-bold uppercase tracking-wider">Historical Total</span>
+            <i class="fa-solid fa-vault text-sky-400 text-base"></i>
+          </div>
+          <div class="flex items-baseline gap-1.5">
+            <span id="historicalTotalETH" class="text-3xl font-black text-white">0.0010</span>
+            <span class="text-sm font-bold text-sky-400">ETH</span>
+          </div>
+          <p class="text-[11px] text-slate-400">All-time lifetime contributions</p>
+        </div>
+
+        <!-- Stat 3: Unique Donors -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-800/80 space-y-2">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span class="font-bold uppercase tracking-wider">Verified Donors</span>
+            <i class="fa-solid fa-users text-amber-400 text-base"></i>
+          </div>
+          <div class="flex items-baseline gap-1.5">
+            <span id="uniqueDonorsCount" class="text-3xl font-black text-white">1</span>
+            <span class="text-xs font-semibold text-slate-400">Unique Wallets</span>
+          </div>
+          <p class="text-[11px] text-slate-400" id="totalDonationEventsCount">1 confirmed events logged</p>
+        </div>
+
+        <!-- Stat 4: Campaign Goal Target -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-800/80 space-y-2">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span class="font-bold uppercase tracking-wider">Campaign Milestone</span>
+            <i class="fa-solid fa-bullseye text-purple-400 text-base"></i>
+          </div>
+          <div class="flex items-baseline gap-1.5">
+            <span id="goalTargetText" class="text-3xl font-black text-white">5.00</span>
+            <span class="text-sm font-bold text-purple-400">ETH Goal</span>
+          </div>
+          <p class="text-[11px] text-slate-400" id="goalPercentageText">0.0% of milestone reached</p>
+        </div>
+      </div>
+
+      <!-- Goal Progress Bar -->
+      <div class="space-y-2 pt-2">
+        <div class="flex justify-between text-xs font-semibold text-slate-300">
+          <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-flag-checkered text-emerald-400"></i> Community Target: 5.0 ETH Milestone
+          </span>
+          <span id="progressBarLabel" class="text-emerald-400">0.0% Reached (0.00 / 5 ETH)</span>
+        </div>
+        <div class="w-full bg-slate-900 rounded-full h-3.5 p-0.5 border border-slate-800 overflow-hidden">
+          <div id="goalProgressBar" class="bg-gradient-to-r from-emerald-500 via-teal-400 to-sky-400 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Interactive Grid: Donate (Left) & Wallet / Admin (Right) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <!-- LEFT COLUMN: Donation Interface -->
+      <section class="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-white flex items-center gap-2.5">
+              <i class="fa-solid fa-heart-circle-plus text-emerald-400"></i> Make an On-Chain Donation
+            </h3>
+            <p class="text-xs text-slate-400">Direct payable transaction to `FairFund.donate()`</p>
+          </div>
+          <span class="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full font-medium">
+            Gas Stipend: <span class="text-emerald-400">Standard</span>
+          </span>
+        </div>
+
+        <!-- Quick Select ETH Presets -->
+        <div class="space-y-2">
+          <label class="text-xs font-semibold text-slate-300">Quick Select Amount</label>
+          <div class="grid grid-cols-4 gap-2.5">
+            <button onclick="setDonationAmount('0.01')" class="py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-bold text-xs transition active:scale-95">
+              0.01 ETH
+            </button>
+            <button onclick="setDonationAmount('0.05')" class="py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-bold text-xs transition active:scale-95">
+              0.05 ETH
+            </button>
+            <button onclick="setDonationAmount('0.10')" class="py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-bold text-xs transition active:scale-95">
+              0.10 ETH
+            </button>
+            <button onclick="setDonationAmount('0.25')" class="py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-bold text-xs transition active:scale-95">
+              0.25 ETH
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Donation Amount Input -->
+        <div class="space-y-2">
+          <label for="donationInput" class="text-xs font-semibold text-slate-300">Donation Amount (ETH)</label>
+          <div class="relative">
+            <input type="number" id="donationInput" step="0.001" min="0.0001" placeholder="0.05" value="0.05" class="w-full pl-4 pr-16 py-4 rounded-2xl bg-slate-900/90 border border-slate-700 text-white font-black text-xl focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" oninput="calculateUSD()">
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400 font-extrabold text-sm">
+              ETH
+            </div>
+          </div>
+          <div class="flex justify-between text-xs text-slate-400 px-1">
+            <span>Estimated Value: <strong id="usdValueText" class="text-emerald-400 font-semibold">$132.50 USD</strong></span>
+            <span>Sepolia Testnet ETH Only</span>
+          </div>
+        </div>
+
+        <!-- Action Donation Button -->
+        <button id="donateBtn" onclick="executeDonation()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-base shadow-xl shadow-emerald-500/20 transition-all transform active:scale-98 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span id="donateBtnText">DONATE TO FAIRFUND</span>
+        </button>
+
+        <!-- Security & Audit Micro Note -->
+        <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800/80 text-slate-400 text-xs flex items-center gap-2.5">
+          <i class="fa-solid fa-lock text-emerald-400 text-sm"></i>
+          <span>Non-custodial transaction signed directly via your wallet. 100% of funds land in the smart contract balance.</span>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: Wallet Info & Owner Controls -->
+      <section class="lg:col-span-5 space-y-6">
+        
+        <!-- Connected Wallet Card -->
+        <div class="glass-panel rounded-3xl p-6 border border-slate-800 shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-user-shield text-emerald-400"></i> Active Wallet Status
+            </h4>
+            <span id="walletConnectionPill" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Connected</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
+              <span class="text-slate-400">Address</span>
+              <div class="flex items-center gap-1.5 font-mono">
+                <span id="userWalletAddress" class="text-slate-300">0x6a53...3920</span>
+                <button onclick="copyToClipboard(userAddress || '', 'Wallet Address')" class="text-slate-500 hover:text-slate-300 transition" title="Copy Address">
+                  <i class="fa-regular fa-copy text-xs"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
+              <span class="text-slate-400">ETH Balance</span>
+              <span id="userWalletBalance" class="font-bold text-white">0.0337 ETH</span>
+            </div>
+
+            <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
+              <span class="text-slate-400">Active Network</span>
+              <span id="userNetworkDisplay" class="font-semibold text-emerald-400">Ethereum Sepolia (11155111)</span>
+            </div>
+
+            <div class="flex items-center justify-between py-1.5">
+              <span class="text-slate-400">Role Verification</span>
+              <span id="userRoleBadge" class="text-[11px] font-black text-amber-400">Contract Owner (👑)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contract Owner Controls Card (Revealed if userAddress == owner) -->
+        <div id="ownerPanel" class="glass-panel rounded-3xl p-6 border border-amber-500/40 shadow-xl space-y-4 transition-all">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h4 class="text-sm font-bold text-amber-400 flex items-center gap-2">
+              <i class="fa-solid fa-crown"></i> Contract Owner Administration
+            </h4>
+            <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">
+              Owner Verified
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Your authenticated address matches <code class="text-amber-300 font-mono">owner</code> in the contract. 
+            You can release all accumulated vault funds to your wallet using <code class="text-emerald-400 font-mono">withdraw()</code>.
+          </p>
+
+          <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+            <span class="text-xs text-slate-400">Withdrawable Balance</span>
+            <span class="text-sm font-black text-amber-400" id="ownerWithdrawableETH">0.0010 ETH</span>
+          </div>
+
+          <button id="withdrawBtn" onclick="withdrawOwnerFunds()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2 active:scale-95">
+            <i class="fa-solid fa-vault"></i> WITHDRAW CONTRACT FUNDS (`withdraw()`)
+          </button>
+          
+          <p class="text-[10px] text-slate-500 text-center">
+            Secured by Solidity: 2,300 gas transfer stipend eliminates re-entrancy attack vectors.
+          </p>
+        </div>
+
+        <!-- Manual Inspection Mode Panel -->
+        <div class="glass-panel rounded-3xl p-6 border border-slate-800 shadow-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <i class="fa-solid fa-glasses text-sky-400"></i> Read-Only Address Inspector
+            </h4>
+            <span class="text-[10px] text-slate-500 font-mono">No Signature Needed</span>
+          </div>
+          <p class="text-xs text-slate-400">
+            Check permissions, contributions, and balances for any EVM wallet address without signing transactions.
+          </p>
+          <div class="flex gap-2">
+            <input type="text" id="manualAddressInput" placeholder="0x..." class="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono text-slate-200 focus:outline-none focus:border-sky-500">
+            <button onclick="inspectManualAddress()" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-bold transition">
+              Inspect
+            </button>
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- Live On-Chain Event Activity Ledger -->
+    <section id="ledgerSection" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+        <div>
+          <h3 class="text-xl font-bold text-white flex items-center gap-2.5">
+            <i class="fa-solid fa-list-check text-emerald-400"></i> Live On-Chain Donation Ledger
+          </h3>
+          <p class="text-xs text-slate-400">Queried dynamically from smart contract `Donation(address,uint256)` event logs on Sepolia</p>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <input type="text" id="eventSearchInput" placeholder="Filter donor 0x..." oninput="filterDonationEvents()" class="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-slate-300 focus:outline-none focus:border-emerald-500">
+          <button onclick="fetchDonationEvents()" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 text-xs rounded-xl transition flex items-center gap-1.5">
+            <i class="fa-solid fa-rotate"></i> Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- Ledger Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-slate-800 text-slate-400 uppercase font-semibold">
+              <th class="py-3 px-4">Donor Address</th>
+              <th class="py-3 px-4">Contribution</th>
+              <th class="py-3 px-4">Block Number</th>
+              <th class="py-3 px-4 text-right">EVM Verification</th>
+            </tr>
+          </thead>
+          <tbody id="eventsTableBody" class="divide-y divide-slate-800/60 font-mono text-slate-300"><tr class="hover:bg-slate-900/60 transition">
+          <td class="py-3 px-4 font-mono text-emerald-400">
+            <span title="0x6a5320ACBCD782A6870e4fd66Bf78103ae463920">0x6a53...3920</span>
+          </td>
+          <td class="py-3 px-4 font-bold text-white">0.0010 ETH</td>
+          <td class="py-3 px-4 text-slate-400">#11868642</td>
+          <td class="py-3 px-4 text-right">
+            <a href="https://sepolia.etherscan.io/tx/0xa72184b2db8ab286b5f611f38d7c57c8c0e8349764ba7465d403ea3ad4da9b3a" target="_blank" class="text-sky-400 hover:underline">
+              Verify <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </td>
+        </tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Architecture & PRD Explorer (Interactive Specification) -->
+    <section id="architectureSection" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+        <div>
+          <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 uppercase tracking-wide">
+            Product Requirement Document (PRD)
+          </span>
+          <h3 class="text-xl sm:text-2xl font-black text-white mt-1">
+            FairFund System Architecture &amp; Security Specification
+          </h3>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="flex rounded-xl bg-slate-900 p-1 border border-slate-800 text-xs font-bold text-slate-400">
+          <button onclick="switchPrdTab('architecture')" id="tabBtn-architecture" class="px-3 py-1.5 rounded-lg bg-slate-800 text-white transition">Architecture</button>
+          <button onclick="switchPrdTab('solidity')" id="tabBtn-solidity" class="px-3 py-1.5 rounded-lg hover:text-white transition">Smart Contract</button>
+          <button onclick="switchPrdTab('security')" id="tabBtn-security" class="px-3 py-1.5 rounded-lg hover:text-white transition">Security Matrix</button>
+          <button onclick="switchPrdTab('roadmap')" id="tabBtn-roadmap" class="px-3 py-1.5 rounded-lg hover:text-white transition">Roadmap</button>
+        </div>
+      </div>
+
+      <!-- Tab Content 1: System Architecture -->
+      <div id="tabContent-architecture" class="space-y-4 text-xs">
+        <p class="text-slate-300 leading-relaxed">
+          FairFund operates on a <strong>3-tier client-contract-network model</strong> designed to execute without dedicated backend middleware (serverless DApp paradigm).
+        </p>
+
+        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 font-mono text-[11px] text-emerald-400 overflow-x-auto leading-tight">
+<pre>+---------------------------------------------------------------------------------------------------+
+|                                      CLIENT LAYER (Browser)                                       |
+|                                                                                                   |
+|  +---------------------------------------------------------------------------------------------+  |
+|  | Single-File Runtime Environment (HTML5 / Tailwind CSS / ES6 JavaScript)                     |  |
+|  |                                                                                             |  |
+|  |  +---------------------------+  +---------------------------+  +-------------------------+  |  |
+|  |  | Wallet Connection Manager |  |  State &amp; Storage Engine   |  | UI/UX Render Controller |  |  |
+|  |  | (MetaMask &amp; Manual Input) |  | (Ethers.js / LocalStorage)|  | (Tailwind &amp; Modals)     |  |  |
+|  |  +---------------------------+  +---------------------------+  +-------------------------+  |  |
+|  +---------------------------------------------------------------------------------------------+  |
++---------------------------------------------------------------------------------------------------+
+                                   |                               |
+                 window.ethereum   |                               |  Public JSON-RPC Read
+               (EIP-1193 Protocol) |                               |  (Multi-Node Fallback)
+                                   v                               v
++---------------------------------------------------------------------------------------------------+
+|                                  BLOCKCHAIN CONNECTOR (Ethers.js v6)                              |
+|                                                                                                   |
+|  +------------------------------------------+  +-----------------------------------------------+  |
+|  | BrowserProvider (Signer Operations)      |  | JsonRpcProvider (Fallback Multi-Node Read)    |  |
+|  +------------------------------------------+  +-----------------------------------------------+  |
++---------------------------------------------------------------------------------------------------+
+                                   |                               |
+                     Raw Sign Tx   |                               |  eth_call / eth_getLogs
+                                   v                               v
++---------------------------------------------------------------------------------------------------+
+|                                   ETHEREUM SEPOLIA TESTNET                                        |
+|                                                                                                   |
+|  +---------------------------------------------------------------------------------------------+  |
+|  | Smart Contract: FairFund (Address: 0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3)               |  |
+|  |                                                                                             |  |
+|  |  Functions:                                  Events &amp; State:                                |  |
+|  |   - donate() public payable                   - Donation(address donor, uint256 amount)     |  |
+|  |   - getBalance() public view                  - address public owner                         |  |
+|  |   - withdraw() public                                                                        |  |
+|  +---------------------------------------------------------------------------------------------+  |
++---------------------------------------------------------------------------------------------------+</pre>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="glass-card rounded-xl p-4 border border-slate-800 space-y-1.5">
+            <h5 class="font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-server text-emerald-400"></i> Dual-Provider Strategy
+            </h5>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              Active signer calls route through <code class="text-slate-200">BrowserProvider</code>, while public vault reads and event logs query public Sepolia RPCs (<code class="text-slate-200">publicnode</code>, <code class="text-slate-200">1rpc</code>, <code class="text-slate-200">drpc</code>). The site works immediately even if MetaMask is locked.
+            </p>
+          </div>
+          <div class="glass-card rounded-xl p-4 border border-slate-800 space-y-1.5">
+            <h5 class="font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-bolt text-sky-400"></i> Pure Client-Side Execution
+            </h5>
+            <p class="text-slate-400 text-[11px] leading-relaxed">
+              Zero centralized backend servers, API keys, or databases. The blockchain acts as both the authoritative state machine and the persistent event store.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Smart Contract Specification -->
+      <div id="tabContent-solidity" class="space-y-4 text-xs hidden">
+        <div class="flex items-center justify-between">
+          <p class="text-slate-300">
+            Source code for <code class="text-emerald-400 font-mono">FairFund.sol</code> deployed at <code class="text-slate-200 font-mono">0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3</code>.
+          </p>
+          <button onclick="copyToClipboard(document.getElementById('soliditySourceCode').innerText, 'Solidity Source Code')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-[11px] font-semibold transition">
+            <i class="fa-regular fa-copy mr-1"></i> Copy Code
+          </button>
+        </div>
+
+        <pre id="soliditySourceCode" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 font-mono text-[11px] text-slate-300 overflow-x-auto leading-relaxed">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract FairFund {
+    // State Variable: Stores the Ethereum address of the deployer
+    address public owner;
+
+    // Event emitted upon successful execution of donate()
+    // 'indexed' keyword allows off-chain filters to query contributions by donor address
+    event Donation(address indexed donor, uint256 amount);
+
+    /**
+     * @notice Constructor executes once upon contract deployment.
+     * Sets the deployer's address as the immutable owner.
+     */
+    constructor() {
+        owner = msg.sender;
+    }
+
+    /**
+     * @notice Allows external users to send ETH to the contract.
+     * @dev Marked 'payable' to accept value transfers. Reverts if msg.value is zero.
+     */
+    function donate() public payable {
+        require(msg.value &gt; 0, "Donation must be greater than 0");
+        emit Donation(msg.sender, msg.value);
+    }
+
+    /**
+     * @notice Queries the current ETH balance held by the contract.
+     * @return Current balance in Wei.
+     */
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    /**
+     * @notice Withdraws the total ETH balance to the owner's account.
+     * @dev Restricted strictly to the contract owner.
+     */
+    function withdraw() public {
+        require(msg.sender == owner, "Only owner can withdraw");
+        payable(owner).transfer(address(this).balance);
+    }
+}</pre>
+      </div>
+
+      <!-- Tab Content 3: Security Matrix -->
+      <div id="tabContent-security" class="space-y-4 text-xs hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400 uppercase font-semibold">
+                <th class="py-2.5 px-3">Threat Vector</th>
+                <th class="py-2.5 px-3">Severity</th>
+                <th class="py-2.5 px-3">Vulnerability Mechanism</th>
+                <th class="py-2.5 px-3">Architectural Mitigation</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-slate-300">
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">Re-entrancy Attack</td>
+                <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold text-[10px]">High</span></td>
+                <td class="py-2.5 px-3 text-slate-400">External contract recursively calls withdraw() before balance updates.</td>
+                <td class="py-2.5 px-3 text-emerald-400">Mitigated: Uses native <code class="font-mono">.transfer()</code> capped at 2,300 gas stipend, preventing re-entrancy state changes.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">Unauthorized Withdrawal</td>
+                <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold text-[10px]">Critical</span></td>
+                <td class="py-2.5 px-3 text-slate-400">Non-owner calls withdraw() to drain contract.</td>
+                <td class="py-2.5 px-3 text-emerald-400">Mitigated: Strictly enforced at EVM level via <code class="font-mono">require(msg.sender == owner)</code>.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">Zero-Value Spam</td>
+                <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-slate-500/20 text-slate-300 font-bold text-[10px]">Low</span></td>
+                <td class="py-2.5 px-3 text-slate-400">Users donate 0 ETH to spam event logs.</td>
+                <td class="py-2.5 px-3 text-emerald-400">Mitigated: Guarded by <code class="font-mono">require(msg.value &gt; 0)</code>.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">RPC Node Outage</td>
+                <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px]">Medium</span></td>
+                <td class="py-2.5 px-3 text-slate-400">Public JSON-RPC provider goes down or throttles requests.</td>
+                <td class="py-2.5 px-3 text-emerald-400">Mitigated: Multi-RPC failover array automatically retries secondary nodes.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-bold text-white">Browser Origin Blocking</td>
+                <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold text-[10px]">Medium</span></td>
+                <td class="py-2.5 px-3 text-slate-400">Local <code class="font-mono">file:///</code> protocol assigns null origin, breaking MetaMask.</td>
+                <td class="py-2.5 px-3 text-emerald-400">Mitigated: Built-in local HTTP server instructions + manual inspection fallback mode.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab Content 4: Roadmap -->
+      <div id="tabContent-roadmap" class="space-y-4 text-xs hidden">
+        <div id="roadmapSection" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="glass-card rounded-2xl p-5 border border-emerald-500/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-400">PHASE 1: Core DApp (LIVE)</span>
+              <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">Current</span>
+            </div>
+            <ul class="list-disc pl-4 space-y-1 text-slate-300 text-[11px]">
+              <li>Single-contract architecture on Ethereum Sepolia Testnet</li>
+              <li>Ethers.js v6 dual-provider routing &amp; live event querying</li>
+              <li>Pure client-side serverless execution</li>
+            </ul>
+          </div>
+
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-sky-400">PHASE 2: Campaign Factory</span>
+              <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-bold">Planned</span>
+            </div>
+            <ul class="list-disc pl-4 space-y-1 text-slate-400 text-[11px]">
+              <li>Deploy `CampaignFactory.sol` for user-created campaigns</li>
+              <li>Customizable targets, deadlines, and milestone-based releases</li>
+            </ul>
+          </div>
+
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-purple-400">PHASE 3: L2 &amp; Cross-Chain</span>
+              <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-bold">Research</span>
+            </div>
+            <ul class="list-disc pl-4 space-y-1 text-slate-400 text-[11px]">
+              <li>Deploy to Arbitrum, Base, and Optimism (&lt;$0.01 gas per donation)</li>
+              <li>Chainlink CCIP cross-chain donation routing</li>
+            </ul>
+          </div>
+
+          <div class="glass-card rounded-2xl p-5 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-400">PHASE 4: Quadratic Funding</span>
+              <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-bold">Future</span>
+            </div>
+            <ul class="list-disc pl-4 space-y-1 text-slate-400 text-[11px]">
+              <li>Quadratic Funding matching pools for public goods distribution</li>
+              <li>Safe (formerly Gnosis Safe) multi-sig treasury management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-950/80 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-slate-300">FairFund</span>
+        <span>— Open Source Non-Custodial DApp</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-4 text-slate-400">
+        <a href="https://sepolia.etherscan.io/address/0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3" target="_blank" class="hover:text-emerald-400 transition">Sepolia Contract</a>
+        <a href="https://github.com/Pleum/FairFund" target="_blank" class="hover:text-emerald-400 text-slate-300 font-semibold transition flex items-center gap-1.5">
+          <i class="fa-brands fa-github text-sm text-white"></i> GitHub Repository: <span class="text-emerald-400 underline">https://github.com/Pleum/FairFund</span>
+        </a>
+        <button onclick="openContractInspector()" class="hover:text-emerald-400 transition">ABI &amp; Source</button>
+      </div>
+      <div>
+        <span>Built with Solidity ^0.8.20 &amp; Ethers.js v6</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Contract Inspector Modal -->
+  <div id="inspectorModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-panel max-w-2xl w-full rounded-3xl border border-slate-800 p-6 space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-code text-emerald-400"></i> Smart Contract Inspector
+        </h3>
+        <button onclick="closeContractInspector()" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs overflow-y-auto pr-1 flex-1">
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Contract Address (Sepolia)</label>
+          <div class="flex gap-2">
+            <code id="modalContractAddr" class="flex-1 bg-slate-900 p-2.5 rounded-xl text-emerald-400 font-mono break-all border border-slate-800">
+              0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3
+            </code>
+            <button onclick="copyToClipboard(document.getElementById('modalContractAddr').innerText.trim(), 'Contract Address')" class="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">GitHub Repository</label>
+          <a href="https://github.com/Pleum/FairFund" target="_blank" class="flex items-center gap-2 bg-slate-900 p-2.5 rounded-xl text-sky-400 hover:text-sky-300 font-mono text-xs border border-slate-800 transition">
+            <i class="fa-brands fa-github text-base text-white"></i>
+            <span>GitHub Repository: https://github.com/Pleum/FairFund</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-auto text-slate-400"></i>
+          </a>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Contract ABI (JSON Format)</label>
+          <pre id="modalContractABI" class="bg-slate-900 p-3 rounded-xl text-slate-300 font-mono text-[11px] overflow-x-auto border border-slate-800 max-h-36">[
+  "function owner() view returns (address)",
+  "function donate() public payable",
+  "function getBalance() view returns (uint256)",
+  "function withdraw() public",
+  "event Donation(address indexed donor, uint256 amount)"
+]</pre>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-800 flex justify-end gap-2">
+        <button onclick="closeContractInspector()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold">
+          Close Inspector
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Inspection Modal -->
+  <div id="manualInspectionModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-panel max-w-md w-full rounded-3xl border border-sky-500/30 p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-glasses text-sky-400"></i> Manual Address Inspector
+        </h3>
+        <button onclick="toggleManualInspectionModal()" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Supply any valid Ethereum address to inspect role permissions (owner vs donor) and live balance on Sepolia.
+      </p>
+
+      <div class="space-y-2">
+        <input type="text" id="modalManualInput" placeholder="0x..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs font-mono text-white focus:outline-none focus:border-sky-500">
+      </div>
+
+      <div class="flex gap-2 justify-end pt-2">
+        <button onclick="toggleManualInspectionModal()" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl text-xs font-bold">
+          Cancel
+        </button>
+        <button onclick="executeModalManualInspection()" class="px-4 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-xl text-xs font-bold transition">
+          Inspect Address
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donation Success Receipt Modal -->
+  <div id="receiptModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="glass-panel max-w-md w-full rounded-3xl border border-emerald-500/40 p-6 space-y-4 text-center">
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/20">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 class="text-xl font-black text-white">Donation Confirmed!</h3>
+      <p class="text-xs text-slate-300">
+        Thank you for your generous contribution to FairFund! Your donation has been immutably recorded to the Ethereum blockchain.
+      </p>
+
+      <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-left space-y-2 text-xs font-mono">
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Amount:</span>
+          <span class="text-emerald-400 font-bold" id="receiptAmount">0.05 ETH</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Tx Hash:</span>
+          <a id="receiptTxLink" href="http://localhost:8080/preview.html#" target="_blank" class="text-sky-400 underline truncate max-w-[200px]">0x...</a>
+        </div>
+      </div>
+
+      <button onclick="closeReceiptModal()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition">
+        Close &amp; Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-slate-200 text-xs shadow-2xl transition-all transform translate-y-20 opacity-0 pointer-events-none">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+    <span id="toastMessage">MetaMask Connected Successfully!</span>
+  </div>
+
+  <!-- Main JavaScript Logic -->
+  <script>
+    const SEPOLIA_CHAIN_ID_HEX = '0xaa36a7';
+    const SEPOLIA_CHAIN_ID_DEC = 11155111;
+    const ETH_USD_CONVERSION_RATE = 2650;
+    const MILESTONE_GOAL_ETH = 5.0;
+
+    const CONTRACT_ABI = [
+      "function owner() view returns (address)",
+      "function donate() public payable",
+      "function getBalance() view returns (uint256)",
+      "function withdraw() public",
+      "event Donation(address indexed donor, uint256 amount)"
+    ];
+
+    const SEPOLIA_RPC_URLS = [
+      'https://ethereum-sepolia-rpc.publicnode.com',
+      'https://rpc.sepolia.org',
+      'https://1rpc.io/sepolia',
+      'https://sepolia.drpc.org'
+    ];
+
+    let currentContractAddress = "0xD0D19833e211d0F483494E73822Dbb7DEB52B8D3";
+    let readProvider = null;
+    let browserProvider = null;
+    let signer = null;
+    let userAddress = null;
+    let isManualInspection = false;
+    let readContract = null;
+    let writeContract = null;
+    let listenersAttached = false;
+    let cachedDonationEvents = [];
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      calculateUSD();
+      await initReadProvider();
+    });
+
+    window.addEventListener('ethereum#initialized', () => {
+      // Auto-check if MetaMask is available
+    }, { once: true });
+
+    function getEthereumProvider() {
+      if (window.ethereum?.providers?.length) {
+        const mm = window.ethereum.providers.find(p => p.isMetaMask);
+        if (mm) return mm;
+        return window.ethereum.providers[0];
+      }
+      if (window.ethereum) return window.ethereum;
+      if (window.parent && window.parent.ethereum) return window.parent.ethereum;
+      if (window.top && window.top.ethereum) return window.top.ethereum;
+      return null;
+    }
+
+    async function initReadProvider() {
+      for (const rpcUrl of SEPOLIA_RPC_URLS) {
+        try {
+          readProvider = new ethers.JsonRpcProvider(rpcUrl);
+          readContract = new ethers.Contract(currentContractAddress, CONTRACT_ABI, readProvider);
+          await refreshAllData();
+          return;
+        } catch (err) {
+          console.warn("RPC failed, trying next node:", rpcUrl, err);
+        }
+      }
+    }
+
+    function instantiateContracts() {
+      if (readProvider && currentContractAddress) {
+        readContract = new ethers.Contract(currentContractAddress, CONTRACT_ABI, readProvider);
+      }
+      if (signer && currentContractAddress) {
+        writeContract = new ethers.Contract(currentContractAddress, CONTRACT_ABI, signer);
+      }
+    }
+
+    async function refreshAllData() {
+      await refreshContractBalance();
+      await fetchDonationEvents();
+      if (userAddress) {
+        await updateUIWithWalletData();
+        await checkOwnerPermission();
+      }
+    }
+
+    async function checkCurrentChain(ethereum) {
+      try {
+        const chainId = await ethereum.request({ method: 'eth_chainId' });
+        const isSepolia = chainId.toLowerCase() === SEPOLIA_CHAIN_ID_HEX.toLowerCase();
+        const alertBanner = document.getElementById('networkAlertBanner');
+        if (isSepolia) {
+          alertBanner.classList.add('hidden');
+          document.getElementById('userNetworkDisplay').innerText = "Ethereum Sepolia (11155111)";
+          document.getElementById('userNetworkDisplay').className = "font-semibold text-emerald-400";
+          return true;
+        } else {
+          alertBanner.classList.remove('hidden');
+          document.getElementById('userNetworkDisplay').innerText = `Wrong Chain (${chainId})`;
+          document.getElementById('userNetworkDisplay').className = "font-semibold text-amber-400";
+          return false;
+        }
+      } catch (err) {
+        console.error("Chain check error:", err);
+        return false;
+      }
+    }
+
+    async function switchNetwork() {
+      const ethereum = getEthereumProvider();
+      if (!ethereum) {
+        showToast("MetaMask is not detected.", "error");
+        return;
+      }
+
+      try {
+        await ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: SEPOLIA_CHAIN_ID_HEX }],
+        });
+        document.getElementById('networkAlertBanner').classList.add('hidden');
+        showToast("Switched to Sepolia Testnet!", "success");
+        if (browserProvider && userAddress) {
+          await updateUIWithWalletData();
+        }
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          try {
+            await ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: SEPOLIA_CHAIN_ID_HEX,
+                  chainName: 'Ethereum Sepolia Testnet',
+                  nativeCurrency: { name: 'Sepolia ETH', symbol: 'SEP', decimals: 18 },
+                  rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com', 'https://rpc.sepolia.org'],
+                  blockExplorerUrls: ['https://sepolia.etherscan.io'],
+                },
+              ],
+            });
+            document.getElementById('networkAlertBanner').classList.add('hidden');
+            showToast("Added and switched to Sepolia!", "success");
+          } catch (addError) {
+            console.error("Failed to add Sepolia:", addError);
+            showToast("Failed to add Sepolia network.", "error");
+          }
+        } else {
+          console.error("Network switch error:", switchError);
+          showToast("Network switch cancelled or failed.", "error");
+        }
+      }
+    }
+    window.switchNetwork = switchNetwork;
+
+    async function smartConnectWallet() {
+      const ethereum = getEthereumProvider();
+
+      if (!ethereum) {
+        showToast("MetaMask extension not detected. Please install MetaMask.", "error");
+        return;
+      }
+
+      try {
+        setConnectButtonState("Connecting...", true);
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        if (!accounts || accounts.length === 0) throw new Error("No accounts authorized.");
+
+        browserProvider = new ethers.BrowserProvider(ethereum);
+        signer = await browserProvider.getSigner();
+        userAddress = accounts[0];
+        isManualInspection = false;
+
+        instantiateContracts();
+
+        const isSepolia = await checkCurrentChain(ethereum);
+        if (!isSepolia) {
+          showToast("Please switch to Sepolia Testnet.", "info");
+          await switchNetwork();
+        }
+
+        await updateUIWithWalletData();
+        await checkOwnerPermission();
+        attachWalletListeners(ethereum);
+
+        document.getElementById('walletConnectionPill').innerText = "Connected";
+        document.getElementById('walletConnectionPill').className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+
+        showToast("MetaMask Connected Successfully!", "success");
+      } catch (err) {
+        console.error("Wallet Connection Error:", err);
+        showToast("Connection failed: " + (err.shortMessage || err.message || "User rejected"), "error");
+        setConnectButtonState("Connect Wallet", false);
+      }
+    }
+
+    function attachWalletListeners(ethereum) {
+      if (listenersAttached || !ethereum.on) return;
+      listenersAttached = true;
+
+      ethereum.on('accountsChanged', async (accounts) => {
+        if (!accounts || accounts.length === 0) {
+          userAddress = null;
+          signer = null;
+          writeContract = null;
+          document.getElementById('connectWalletBtnText').innerText = "Connect Wallet";
+          document.getElementById('userWalletAddress').innerText = "Disconnected";
+          document.getElementById('userWalletBalance').innerText = "0.0000 ETH";
+          document.getElementById('ownerPanel').classList.add('hidden');
+          document.getElementById('walletConnectionPill').innerText = "Not Connected";
+          document.getElementById('walletConnectionPill').className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700";
+          showToast("Wallet disconnected.", "info");
+        } else {
+          userAddress = accounts[0];
+          if (browserProvider) {
+            signer = await browserProvider.getSigner();
+            instantiateContracts();
+            await updateUIWithWalletData();
+            await checkOwnerPermission();
+            showToast("Switched account to " + userAddress.substring(0, 6) + "...", "info");
+          }
+        }
+      });
+
+      ethereum.on('chainChanged', async () => {
+        await checkCurrentChain(ethereum);
+        if (browserProvider && userAddress) {
+          signer = await browserProvider.getSigner();
+          instantiateContracts();
+          await updateUIWithWalletData();
+        }
+      });
+    }
+
+    async function updateUIWithWalletData() {
+      if (!userAddress) return;
+
+      const truncated = userAddress.substring(0, 6) + "..." + userAddress.substring(userAddress.length - 4);
+      document.getElementById('connectWalletBtnText').innerText = truncated;
+      document.getElementById('userWalletAddress').innerText = truncated;
+
+      const providerToUse = browserProvider || readProvider;
+      if (providerToUse) {
+        try {
+          const balanceWei = await providerToUse.getBalance(userAddress);
+          const balanceETH = ethers.formatEther(balanceWei);
+          document.getElementById('userWalletBalance').innerText = parseFloat(balanceETH).toFixed(4) + " ETH";
+        } catch(e) {
+          console.error("Error reading balance:", e);
+        }
+      }
+      setConnectButtonState(truncated, false);
+    }
+
+    async function checkOwnerPermission() {
+      const contract = readContract || writeContract;
+      if (!contract || !userAddress) return;
+      try {
+        const ownerAddr = await contract.owner();
+        const isOwner = ownerAddr.toLowerCase() === userAddress.toLowerCase();
+        const ownerPanel = document.getElementById('ownerPanel');
+        const roleBadge = document.getElementById('userRoleBadge');
+
+        if (isOwner) {
+          ownerPanel.classList.remove('hidden');
+          roleBadge.innerText = "Contract Owner (👑)";
+          roleBadge.className = "text-[11px] font-black text-amber-400";
+          // Update withdrawable amount
+          const contractBal = document.getElementById('contractBalanceETH').innerText;
+          document.getElementById('ownerWithdrawableETH').innerText = contractBal + " ETH";
+        } else {
+          ownerPanel.classList.add('hidden');
+          roleBadge.innerText = "Donor";
+          roleBadge.className = "text-[11px] font-semibold text-slate-400";
+        }
+      } catch (e) {
+        document.getElementById('ownerPanel').classList.add('hidden');
+      }
+    }
+
+    async function executeDonation() {
+      if (!signer) {
+        showToast("Please connect your wallet first.", "info");
+        await smartConnectWallet();
+        return;
+      }
+
+      const inputVal = document.getElementById('donationInput').value;
+      if (!inputVal || parseFloat(inputVal) <= 0) {
+        showToast("Donation amount must be greater than 0 ETH.", "error");
+        return;
+      }
+
+      try {
+        setDonateButtonState("Awaiting Signature...", true);
+        const ethAmountWei = ethers.parseEther(inputVal);
+        const tx = await writeContract.donate({ value: ethAmountWei });
+        
+        setDonateButtonState("Mining Transaction...", true);
+        showToast(`Transaction Broadcasted: ${tx.hash.substring(0, 10)}...`, "info");
+        
+        const receipt = await tx.wait(1);
+
+        // Confetti celebration!
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+
+        // Trigger receipt modal
+        document.getElementById('receiptAmount').innerText = `${inputVal} ETH (~$${(parseFloat(inputVal) * ETH_USD_CONVERSION_RATE).toFixed(2)})`;
+        document.getElementById('receiptTxLink').href = `https://sepolia.etherscan.io/tx/${tx.hash}`;
+        document.getElementById('receiptTxLink').innerText = tx.hash;
+        document.getElementById('receiptModal').classList.remove('hidden');
+
+        setDonateButtonState("DONATE TO FAIRFUND", false);
+        await refreshAllData();
+      } catch (err) {
+        console.error("Donation Error:", err);
+        setDonateButtonState("DONATE TO FAIRFUND", false);
+        showToast("Donation failed: " + (err.shortMessage || err.message || "User cancelled"), "error");
+      }
+    }
+
+    async function refreshContractBalance() {
+      const contract = readContract || writeContract;
+      if (!contract) return;
+      try {
+        const balanceWei = await contract.getBalance();
+        const balanceETH = parseFloat(ethers.formatEther(balanceWei));
+        const ethFormatted = balanceETH.toFixed(4);
+        const usdFormatted = (balanceETH * ETH_USD_CONVERSION_RATE).toFixed(2);
+
+        document.getElementById('contractBalanceETH').innerText = ethFormatted;
+        document.getElementById('contractBalanceUSD').innerText = `≈ $${usdFormatted} USD`;
+
+        // Update progress bar
+        const progressPct = Math.min(100, (balanceETH / MILESTONE_GOAL_ETH) * 100);
+        document.getElementById('goalProgressBar').style.width = `${progressPct.toFixed(1)}%`;
+        document.getElementById('goalPercentageText').innerText = `${progressPct.toFixed(1)}% of milestone reached`;
+        document.getElementById('progressBarLabel').innerText = `${progressPct.toFixed(1)}% Reached (${balanceETH.toFixed(2)} / ${MILESTONE_GOAL_ETH} ETH)`;
+      } catch (err) {
+        console.error("Error fetching balance:", err);
+      }
+    }
+
+    async function fetchDonationEvents() {
+      const tbody = document.getElementById('eventsTableBody');
+      const contract = readContract;
+      if (!contract || !readProvider) return;
+
+      try {
+        const latestBlock = await readProvider.getBlockNumber();
+        const fromBlock = Math.max(0, latestBlock - 5000);
+        const filter = contract.filters.Donation();
+        const events = await contract.queryFilter(filter, fromBlock, 'latest');
+
+        cachedDonationEvents = events;
+        renderEventsTable(events);
+
+        // Historical Total & Unique Donors Calculations
+        const donorsSet = new Set();
+        let totalWei = BigInt(0);
+
+        events.forEach(evt => {
+          donorsSet.add(evt.args[0].toLowerCase());
+          totalWei += BigInt(evt.args[1]);
+        });
+
+        document.getElementById('uniqueDonorsCount').innerText = donorsSet.size;
+        document.getElementById('totalDonationEventsCount').innerText = `${events.length} confirmed events logged`;
+        document.getElementById('historicalTotalETH').innerText = parseFloat(ethers.formatEther(totalWei)).toFixed(4);
+
+      } catch (err) {
+        console.error("Failed to query event logs:", err);
+        tbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-amber-400 font-sans text-xs">Could not query event logs: ${err.message || 'RPC busy'}.</td></tr>`;
+      }
+    }
+
+    function renderEventsTable(events) {
+      const tbody = document.getElementById('eventsTableBody');
+      if (events.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-500 font-sans">No recent donation events recorded in the last 5,000 blocks.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = "";
+      events.slice().reverse().slice(0, 15).forEach(evt => {
+        const donor = evt.args[0];
+        const amount = ethers.formatEther(evt.args[1]);
+        const txHash = evt.transactionHash;
+        const blockNum = evt.blockNumber;
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-900/60 transition";
+        tr.innerHTML = `
+          <td class="py-3 px-4 font-mono text-emerald-400">
+            <span title="${donor}">${donor.substring(0,6)}...${donor.substring(donor.length-4)}</span>
+          </td>
+          <td class="py-3 px-4 font-bold text-white">${parseFloat(amount).toFixed(4)} ETH</td>
+          <td class="py-3 px-4 text-slate-400">#${blockNum}</td>
+          <td class="py-3 px-4 text-right">
+            <a href="https://sepolia.etherscan.io/tx/${txHash}" target="_blank" class="text-sky-400 hover:underline">
+              Verify <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterDonationEvents() {
+      const query = document.getElementById('eventSearchInput').value.trim().toLowerCase();
+      if (!query) {
+        renderEventsTable(cachedDonationEvents);
+        return;
+      }
+      const filtered = cachedDonationEvents.filter(evt => evt.args[0].toLowerCase().includes(query));
+      renderEventsTable(filtered);
+    }
+
+    async function withdrawOwnerFunds() {
+      if (!writeContract) {
+        showToast("Connect owner wallet first.", "error");
+        return;
+      }
+      try {
+        const btn = document.getElementById('withdrawBtn');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Processing Withdrawal...`;
+
+        showToast("Opening MetaMask for withdrawal authorization...", "info");
+        const tx = await writeContract.withdraw();
+        showToast(`Withdrawal tx submitted: ${tx.hash.substring(0, 10)}...`, "info");
+        await tx.wait(1);
+
+        showToast("Funds successfully withdrawn to your wallet!", "success");
+        await refreshAllData();
+      } catch (err) {
+        console.error("Withdrawal error:", err);
+        showToast("Withdrawal failed: " + (err.shortMessage || err.message || "Cancelled"), "error");
+      } finally {
+        const btn = document.getElementById('withdrawBtn');
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-vault"></i> WITHDRAW CONTRACT FUNDS (\`withdraw()\`)`;
+      }
+    }
+
+    // Manual Inspection Mode (Section 4.2 of PRD)
+    function inspectManualAddress() {
+      const addr = document.getElementById('manualAddressInput').value.trim();
+      executeManualLookup(addr);
+    }
+
+    function executeModalManualInspection() {
+      const addr = document.getElementById('modalManualInput').value.trim();
+      executeManualLookup(addr);
+      toggleManualInspectionModal();
+    }
+
+    async function executeManualLookup(addr) {
+      if (!ethers.isAddress(addr)) {
+        showToast("Invalid Ethereum address format.", "error");
+        return;
+      }
+
+      userAddress = addr;
+      isManualInspection = true;
+      document.getElementById('walletConnectionPill').innerText = "Inspection Mode (Read-Only)";
+      document.getElementById('walletConnectionPill').className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/30";
+      
+      await updateUIWithWalletData();
+      await checkOwnerPermission();
+      showToast(`Inspecting ${addr.substring(0, 6)}... (Read-Only)`, "info");
+    }
+
+    function toggleManualInspectionModal() {
+      const modal = document.getElementById('manualInspectionModal');
+      modal.classList.toggle('hidden');
+    }
+
+    function updateContractAddress() {
+      const newAddr = document.getElementById('contractAddressInput').value.trim();
+      if (!ethers.isAddress(newAddr)) {
+        showToast("Invalid Ethereum address format.", "error");
+        return;
+      }
+      
+      currentContractAddress = newAddr;
+      document.getElementById('etherscanContractLink').href = `https://sepolia.etherscan.io/address/${newAddr}`;
+      document.getElementById('modalContractAddr').innerText = newAddr;
+      
+      instantiateContracts();
+      refreshAllData();
+      showToast("Updated target contract address!", "success");
+    }
+
+    function setDonationAmount(val) {
+      document.getElementById('donationInput').value = val;
+      calculateUSD();
+    }
+
+    function calculateUSD() {
+      const val = parseFloat(document.getElementById('donationInput').value) || 0;
+      const usd = val * ETH_USD_CONVERSION_RATE;
+      document.getElementById('usdValueText').innerText = `$${usd.toFixed(2)} USD`;
+    }
+
+    function setConnectButtonState(text, disabled) {
+      const btn = document.getElementById('connectWalletBtn');
+      document.getElementById('connectWalletBtnText').innerText = text;
+      btn.disabled = disabled;
+    }
+
+    function setDonateButtonState(text, disabled) {
+      const btn = document.getElementById('donateBtn');
+      document.getElementById('donateBtnText').innerText = text;
+      btn.disabled = disabled;
+    }
+
+    function switchPrdTab(tabKey) {
+      ['architecture', 'solidity', 'security', 'roadmap'].forEach(t => {
+        const content = document.getElementById(`tabContent-${t}`);
+        const btn = document.getElementById(`tabBtn-${t}`);
+        if (t === tabKey) {
+          content.classList.remove('hidden');
+          btn.className = "px-3 py-1.5 rounded-lg bg-slate-800 text-white transition";
+        } else {
+          content.classList.add('hidden');
+          btn.className = "px-3 py-1.5 rounded-lg hover:text-white transition";
+        }
+      });
+    }
+
+    function openContractInspector() {
+      document.getElementById('modalContractAddr').innerText = currentContractAddress;
+      document.getElementById('inspectorModal').classList.remove('hidden');
+    }
+
+    function closeContractInspector() {
+      document.getElementById('inspectorModal').classList.add('hidden');
+    }
+
+    function closeReceiptModal() {
+      document.getElementById('receiptModal').classList.add('hidden');
+    }
+
+    function copyToClipboard(text, label) {
+      if (!text) return;
+      navigator.clipboard.writeText(text);
+      showToast(`${label} copied to clipboard!`, "success");
+    }
+
+    function showToast(msg, type) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMsg.innerText = msg;
+      if (type === 'error') {
+        toastIcon.className = "fa-solid fa-circle-xmark text-rose-400 text-base";
+      } else if (type === 'success') {
+        toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-base";
+      } else {
+        toastIcon.className = "fa-solid fa-circle-info text-sky-400 text-base";
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 4000);
+    }
+  </script>
+
+</body></html>
